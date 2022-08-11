@@ -15,10 +15,20 @@ div#modalOne {
   max-width: 100%;
   /* overflow: hidden; */
 }
-.modal-content, .show-mobile-atag .modal-content {
+.modal-content {
   margin: 50px auto;
   border: 1px solid #999;
   width: 60%;
+}
+
+
+.show-mobile-atag .modal-content{
+  padding: 0;
+  width: 90%;
+  height: auto;
+}
+input.mobile-radio-btn {
+  width: 10px;
 }
 h2,
 p {
@@ -31,7 +41,34 @@ span {
   display: block;
   padding: 0 0 5px;
 }
-form {
+.mobile-view-form{
+  margin: 12px;
+  box-shadow: 0 2px 5px #f5f5f5;
+  background: #eee;
+  padding-bottom: 10px;
+}
+.radio-listing{
+  display: flex;
+}
+.mobile-submit{
+  display: flex;
+  justify-content: flex-end;
+}
+#mobile-submit-btn {
+  color: #ffffff;
+  background: #364ceb;
+  border-radius: 5px;
+  width: 25%;
+  font-size: 12px;
+}
+
+.mobile-form-body{
+   padding: 1rem;
+   display: flex;
+   font-size: 12px;
+   flex-direction: column;
+}
+.desktop-view-form {
   padding: 5rem;
   margin: 25px;
   box-shadow: 0 2px 5px #f5f5f5;
@@ -61,10 +98,24 @@ button:hover {
   color: #aaa;
   float: right;
   font-size: 28px;
+  margin-top: -30px;
   font-weight: bold;
 }
 .close:hover,
 .close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+.close-mobile {
+  color: #aaa;
+  float: right;
+  font-size: 20px;
+  font-weight: bold;
+  margin-top: -20px;
+}
+.close-mobile:hover,
+.close-mobile:focus {
   color: black;
   text-decoration: none;
   cursor: pointer;
@@ -93,14 +144,26 @@ button.button:hover {
   display: none;
 }
 .show-mobile{
-	text-decoration: none;
-   padding: 10px;
+	display: flex;
+  justify-content: center;
+}
+
+a.show-mobile-atag.btn{  
+  padding: 10px;
+  width: 50%;
+  padding: 10px;
+  text-align: center;
 }
 @media only screen and (min-width: 767px) {
   .show-large {
     display: block;
-	text-decoration: none;
+	  text-decoration: none;
    	padding: 10px;
+    display: flex;
+    justify-content: center;
+  }
+  a.button.show-large {
+    width: 50%;
   }
   .show-mobile {
     display: none;
@@ -112,20 +175,21 @@ button.button:hover {
 @supports (-webkit-touch-callout: none) {
   .show-mobile-ios{
     display: block;
-	 text-decoration: none;
+	  text-decoration: none;
    	padding: 10px;
+    display: flex;
+    justify-content: center;
+  }
+  a.show-mobile-ios-atag.btn {
+    padding: 10px;
+    width: 50%;
+    padding: 10px;
+    text-align: center;
   }
   .show-mobile {
     display: none;
+    
   }
 }
 
-a.button.show-large {
-  /* display: flex;
-  justify-content: center; */
-  width: 50%;
-}
-.show-large{
-  display: flex;
-  justify-content: center;
-}
+

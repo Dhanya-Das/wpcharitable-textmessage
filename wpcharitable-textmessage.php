@@ -40,17 +40,18 @@ function text_message_btn( $atts, $content = null){
       'order'            => 'ASC');
     $campaign_ary = get_posts($cmp_ary);
 
-    echo " <div id='show-mobile-atag' class='modal-mobile show-mobile-atag'>
+    echo " <div id='modalTwo' class='modal-mobile show-mobile-atag'>
     <div class='modal-content'>
-      <div class='contact-form'>
-        <a class='close'>&times;</a>
-        <form action='/'>";
+      <div class='contact-form-mobile'>
+        <a class='close-mobile'>&times;</a>
+        <form class='mobile-view-form'>
+          <div class='mobile-form-body'>";
     foreach($campaign_ary as $result){
       $post_url = get_permalink($result->ID);
-            echo "<input type='radio' name='postURL' value='$post_url'><label for='postURLList'>$post_url</label>" ;
+            echo "<div class='radio-listing'><input type='radio' name='postURL' class='mobile-radio-btn' id='radio-btn-checked' value='$post_url'><label for='postURLList'>$post_url</label> </div>" ;
     }
-        echo "</form>
-        </div>
+        echo " </div><div class='mobile-submit'><input type='submit' name='mobile-view-submit' id='mobile-submit-btn' value='Submit'></div></div></form>
+       
       </div>
     </div>";
   // if($user_id == $author_id ){
@@ -64,8 +65,9 @@ function text_message_btn( $atts, $content = null){
 	  	'content' =>'Please support the campaign by following the link '
 	), $atts ) );
 
-  $content_data =  "<p class='show-mobile'><a style='background-color:$bg_color; color:$color; text-decoration: none; border-radius: 5px;' class='show-mobile-atag btn' href='sms:?body=$content $single_page_link'>$text</a> </p>";
-  $content_data .=  "<p class='show-mobile-ios'> <a style='background-color:$bg_color; color:$color; text-decoration: none; border-radius: 5px;' class='show-mobile-ios-atag btn' href='sms://?&body=$content $single_page_link'>$text</a> </p>";
+  $content_data =  "<p class='show-mobile'><a style='background-color:$bg_color; color:$color; text-decoration: none; border-radius: 5px;' class='show-mobile-atag btn' id='addURL' data-modal1='modalTwo' href='sms:?body=$content'>$text</a> </p>";
+  // $content_data =  "<p class='show-mobile'><a style='background-color:$bg_color; color:$color; text-decoration: none; border-radius: 5px;' class='show-mobile-atag btn' id='addURL' data-modal1='modalTwo' href='sms:?body=$content $single_page_link'>$text</a> </p>";
+  $content_data .=  "<p class='show-mobile-ios'> <a style='background-color:$bg_color; color:$color; text-decoration: none; border-radius: 5px;' class='show-mobile-ios-atag btn' id='addURL' data-modal1='modalTwo' href='sms://?&body=$content $single_page_link'>$text</a> </p>";
     
   $content_data .= "<p class='show-large'> <a style='background-color:$bg_color; color:$color; text-decoration: none; border-radius: 5px;' href='#' class='button show-large' data-modal='modalOne'>$text</a> </p>
                     <div id='modalOne' class='modal'>
@@ -73,7 +75,7 @@ function text_message_btn( $atts, $content = null){
                         <div class='contact-form'>
                           <a class='close'>&times;</a>
                           
-                            <form action='/'>
+                            <form class='desktop-view-form'action='/'>
                               <h2>Share by text message</h2>
                               <div>
                                 <input class='fname' type='text' name='name' name='your_name' id='your_name' placeholder='Your Name*'/>
