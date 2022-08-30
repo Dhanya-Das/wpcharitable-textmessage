@@ -30,36 +30,47 @@ div#modalOne {
 input.mobile-radio-btn {
   width: 10px;
 }
-h2,
-p {
+.contact-form h2,
+p-class {
   margin: 0 0 20px;
   font-weight: 400;
   color: #999;
 }
-span {
+.contact-form span {
   color: #666;
   display: block;
   padding: 0 0 5px;
 }
-.mobile-view-form{
-  margin: 12px;
+.mobile-view-form {
+  margin: 3px;
   box-shadow: 0 2px 5px #f5f5f5;
   background: #eee;
-  padding-bottom: 10px;
+  padding-bottom: 17px;
 }
 .radio-listing{
   display: flex;
 }
 .mobile-submit{
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
 }
-#mobile-submit-btn {
+#mobile-submit-btn-and {
   color: #ffffff;
-  background: #364ceb;
+  background: #447ebd;
   border-radius: 5px;
-  width: 25%;
+  /* width: 100%; */
   font-size: 12px;
+  border: none;
+  padding: 8px;
+}
+#mobile-submit-btn-ios {
+  color: #ffffff;
+  background: #447ebd;
+  border-radius: 5px;
+  /* width: 100%; */
+  font-size: 12px;
+  border: none;
+  padding: 8px;
 }
 
 .mobile-form-body{
@@ -74,15 +85,15 @@ span {
   box-shadow: 0 2px 5px #f5f5f5;
   background: #eee;
 }
-input,
-textarea {
+.contact-form input,
+.contact-form textarea {
   width: 90%;
   padding: 10px;
   margin-bottom: 20px;
   border: 1px solid #1c87c9;
   outline: none;
 }
-.contact-form button {
+.contact-form button-class {
   width: 100%;
   padding: 10px;
   border: none;
@@ -91,7 +102,7 @@ textarea {
   font-weight: 400;
   color: #fff;
 }
-button:hover {
+.button-class:hover {
   background: #2371a0;
 }
 .close {
@@ -112,7 +123,10 @@ button:hover {
   float: right;
   font-size: 20px;
   font-weight: bold;
-  margin-top: -20px;
+  top: 10px;
+  right:10px;
+  position:relative;
+	
 }
 .close-mobile:hover,
 .close-mobile:focus {
@@ -120,7 +134,10 @@ button:hover {
   text-decoration: none;
   cursor: pointer;
 }
-button.button {
+#selectedURL {
+	margin-top:20px;
+}
+button.button-class {
   background: none;
   border-top: none;
   outline: none;
@@ -132,7 +149,7 @@ button.button {
   cursor: pointer;
 	
 }
-button.button:hover {
+button.button-class:hover {
   border-bottom: #a99567 1px solid;
   color: #a99567;
 }
@@ -148,12 +165,13 @@ button.button:hover {
   justify-content: center;
 }
 
-a.show-mobile-atag.btn{  
+a.show-mobile-atag.txt-btn{  
   padding: 10px;
   width: 50%;
   padding: 10px;
   text-align: center;
 }
+.txt-btn {border:2px solid #000;}
 @media only screen and (min-width: 767px) {
   .show-large {
     display: block;
@@ -180,7 +198,7 @@ a.show-mobile-atag.btn{
     display: flex;
     justify-content: center;
   }
-  a.show-mobile-ios-atag.btn {
+  a.show-mobile-ios-atag.txt-btn {
     padding: 10px;
     width: 50%;
     padding: 10px;

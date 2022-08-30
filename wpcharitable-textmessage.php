@@ -16,87 +16,124 @@ if ( ! defined( 'ABSPATH' ) ) {
  
 add_action('wp_enqueue_scripts', 'scripts_for_txt_msg_button');
 function scripts_for_txt_msg_button() {
-	wp_enqueue_script('wpcharitable-textmessagejs', TXT_MSG_URL.'assets/js/wpcharitable-textmessage.js', array('jquery'), '1.1.0', true );
+	wp_enqueue_script('wpcharitable-textmessagejs', TXT_MSG_URL.'assets/js/wpcharitable-textmessage6.js', array('jquery'), '1.1.0', true );
 }
 
 add_action('wp_enqueue_scripts', 'style_for_ticketing_txt_msg_button');
 function style_for_ticketing_txt_msg_button() { 
-	wp_enqueue_style('textmessage-wpcharitablecss', TXT_MSG_URL.'assets/css/textmessage-wpcharitable.css');
+	wp_enqueue_style('textmessage-wpcharitablecss', TXT_MSG_URL.'assets/css/textmessage-wpcharitable6.css');
 }
 
 // add_action('init', 'text_message_btn');
 add_shortcode('text_message_btn','text_message_btn');
 function text_message_btn( $atts, $content = null){
-	  global $post;
+	global $post;
   	$user_id = get_current_user_id();
-  	$author_id = $post->post_author;
-  	$single_page_link = get_permalink();
+    if($user_id){
+        $author_id = $post->post_author;
+        $single_page_link = get_permalink();
+        $html = "";
+        $cmp_ary = array (
+        'post_type' => 'campaign',
+        'posts_per_page' => -1,
+        'author' => $user_id,
+        'order'=> 'ASC');
+        $campaign_ary = get_posts($cmp_ary);
+        $count = count($campaign_ary);
+        extract( shortcode_atts( array(
+            
+            'text'   => '',
+            'color'  => '#000',
+            'bg_color' => 'blue',
+            'content' =>'Please support the campaign by following the link '
+        ), $atts ) );
 
-    $cmp_ary = array (
-      'post_type' => 'campaign',
-      'posts_per_page' => -1,
-      'author' => $author_id,
-      'orderby'          => 'post_title',
-      'order'            => 'ASC');
-    $campaign_ary = get_posts($cmp_ary);
 
-    echo " <div id='modalTwo' class='modal-mobile show-mobile-atag'>
-    <div class='modal-content'>
-      <div class='contact-form-mobile'>
-        <a class='close-mobile'>&times;</a>
-        <form class='mobile-view-form'>
-          <div class='mobile-form-body'>";
-    foreach($campaign_ary as $result){
-      $post_url = get_permalink($result->ID);
-            echo "<div class='radio-listing'><input type='radio' name='postURL' class='mobile-radio-btn' id='radio-btn-checked' value='$post_url'><label for='postURLList'>$post_url</label> </div>" ;
-    }
-        echo " </div><div class='mobile-submit'><input type='submit' name='mobile-view-submit' id='mobile-submit-btn' value='Submit'></div></div></form>
-       
-      </div>
-    </div>";
-  // if($user_id == $author_id ){
-  $single_page_link = get_permalink();
-
-  extract( shortcode_atts( array(
-		
-		'text'   => '',
-		'color'  => '#000',
-    	'bg_color' => 'blue',
-	  	'content' =>'Please support the campaign by following the link '
-	), $atts ) );
-
-  $content_data =  "<p class='show-mobile'><a style='background-color:$bg_color; color:$color; text-decoration: none; border-radius: 5px;' class='show-mobile-atag btn' id='addURL' data-modal1='modalTwo' href='sms:?body=$content'>$text</a> </p>";
-  // $content_data =  "<p class='show-mobile'><a style='background-color:$bg_color; color:$color; text-decoration: none; border-radius: 5px;' class='show-mobile-atag btn' id='addURL' data-modal1='modalTwo' href='sms:?body=$content $single_page_link'>$text</a> </p>";
-  $content_data .=  "<p class='show-mobile-ios'> <a style='background-color:$bg_color; color:$color; text-decoration: none; border-radius: 5px;' class='show-mobile-ios-atag btn' id='addURL' data-modal1='modalTwo' href='sms://?&body=$content $single_page_link'>$text</a> </p>";
-    
-  $content_data .= "<p class='show-large'> <a style='background-color:$bg_color; color:$color; text-decoration: none; border-radius: 5px;' href='#' class='button show-large' data-modal='modalOne'>$text</a> </p>
-                    <div id='modalOne' class='modal'>
-                      <div class='modal-content'>
-                        <div class='contact-form'>
-                          <a class='close'>&times;</a>
-                          
-                            <form class='desktop-view-form'action='/'>
-                              <h2>Share by text message</h2>
-                              <div>
-                                <input class='fname' type='text' name='name' name='your_name' id='your_name' placeholder='Your Name*'/>
-                              </div>
-                              <div>
-                                <textarea rows='4' placeholder='Enter or paste phone numbers here'></textarea>
-                              </div>
-                              <span>Message</span>
-                              <div>
-                                <textarea rows='4'> $content 
-                                $single_page_link
-                                </textarea>
-                              </div>
-                              <button type='submit' href='/'>Submit</button>
-                            </form>
-                          
+        foreach($campaign_ary as $result){
+            $page_link = get_permalink($result->ID);
+            break;
+        }
+        $html .= " <div id='modalTwo' class='modal-mobile show-mobile-atag'>
+                <div class='modal-content'>
+                    <div class='contact-form-mobile'>
+                        <a class='close-mobile'>&times;</a>
+                        <form class='mobile-view-form'>
+                            <div class='mobile-form-body'>
+                                <h4>Select a Campaign</h4>
+                                <div class='radio-listing'>
+                                    <select name='postURL' id='selectedURL' class='mobile-radio-btn'>";
+                                        foreach($campaign_ary as $result){
+                                            $post_url = get_permalink($result->ID); 
+                                            $html .= "<option value='$post_url'>$result->post_title</option>" ;
+                                        }
+                                    $html .= " </select>
+                                </div>
+                            </div>
+                            <div class='mobile-submit'>
+                                <a class='show-mobile URLsubmit' id='mobile-submit-btn-and' data-type='sms:?body=' href='sms:?body=$content $page_link'>Send Message</a>
+                                <a class='show-mobile-ios URLsubmit' id='mobile-submit-btn-ios' data-type='sms://?&body=' href='sms://?&body=$content $page_link'>Send Message</a>
+                            </div>
                         </div>
-                      </div>
-                    </div>";
-              return $content_data;
-  // }
+                    </form>
+                </div>
+            </div>";
+        
+        
+        if($count == 0){
+            return true;
+        } else if($count == 1){
+            foreach($campaign_ary as $result){
+                $single_page_link = get_permalink($result->ID);
+            }
+            // $content = $content . " " . $single_page_link;
+            $content_data =  "<p class='show-mobile p-class'><a style='background-color:$bg_color; color:$color; text-decoration: none; border-radius: 5px;' class='show-mobile-atag show-phone txt-btn' id='addURL1' href='sms:?body=$content $single_page_link'>$text</a> </p>";
+            $content_data .=  "<p class='show-mobile-ios p-class'> <a style='background-color:$bg_color; color:$color; text-decoration: none; border-radius: 5px;' class='show-mobile-ios-atag show-phone txt-btn' id='addURL' data-modal1='modalTwo' href='sms://?&body=$content $single_page_link'>$text</a> </p>";
+            return $content_data;
+        } else {
+        // if($user_id == $author_id ){
+        //   $single_page_link = get_permalink();
+            foreach($campaign_ary as $result){
+                $single_page_link = get_permalink($result->ID);
+                break;
+            }
+    
+
+            $content_data =  "<p class='show-mobile p-class'><a style='background-color:$bg_color; color:$color; text-decoration: none; border-radius: 5px;' class='show-mobile-atag show-phone txt-btn' id='addURL1' data-modal1='modalTwo' data-android='$content' href='#'>$text</a> </p>";
+            // $content_data =  "<p class='show-mobile'><a style='background-color:$bg_color; color:$color; text-decoration: none; border-radius: 5px;' class='show-mobile-atag btn' id='addURL' data-modal1='modalTwo' href='sms:?body=$content $single_page_link'>$text</a> </p>";
+            $content_data .=  "<p class='show-mobile-ios p-class'> <a style='background-color:$bg_color; color:$color; text-decoration: none; border-radius: 5px;' class='show-mobile-ios-atag show-phone txt-btn' id='addURL' data-modal1='modalTwo' data-android='$content' href='#'>$text</a> </p>";
+            
+            /*
+            $content_data .= "<p class='show-large p-class'> <a style='background-color:$bg_color; color:$color; text-decoration: none; border-radius: 5px;' href='#' class='button-class-a show-large' data-modal='modalOne'>$text</a> </p>
+                        <div id='modalOne' class='modal'>
+                            <div class='modal-content'>
+                                <div class='contact-form'>
+                                    <a class='close'>&times;</a>
+                            
+                                    <form class='desktop-view-form'action='/'>
+                                        <h2>Share by text message</h2>
+                                        <div>
+                                            <input class='fname' type='text' name='name' name='your_name' id='your_name' placeholder='Your Name*'/>
+                                        </div>
+                                        <div>
+                                            <textarea class='txt-textarea' rows='4' placeholder='Enter or paste phone numbers here'></textarea>
+                                        </div>
+                                        <span>Message</span>
+                                        <div>
+                                            <textarea class='txt-textarea' rows='4'> $content 
+                                                $single_page_link
+                                            </textarea>
+                                        </div>
+                                        <button class='button-class' type='submit' href='/'>Submit</button>
+                                    </form>
+                            
+                                </div>
+                            </div>
+                        </div>";
+            */
+            return $html . $content_data;
+            // }
+        }
+    }
 
 }
 
@@ -113,7 +150,7 @@ function add_text_message_link($campaigns){
   if($user_id == $author_id ){
     echo "<a style='background-color:$bg_color; color:$color; text-decoration: none; border-radius: 5px;' class='show-mobile' href='sms:?body=$content $single_page_link'>$text</a>";
     echo "<a style='background-color:$bg_color; color:$color; text-decoration: none; border-radius: 5px;' class='show-mobile-ios' href='sms://?&body=$content $single_page_link'>$text</a>";
-    echo "<p class='show-large'>
+    echo "<p class='show-large p-class'>
             <a style='background-color:$bg_color; color:$color; text-decoration: none; border-radius: 5px;' href='#' class='button' data-modal='modalOne'>$text</a>
             </p>
             <div id='modalOne' class='modal'>
@@ -127,20 +164,56 @@ function add_text_message_link($campaigns){
                           <input class='fname' type='text' name='name' name='your_name' id='your_name' placeholder='Your Name*'/>
                         </div>
                         <div>
-                          <textarea rows='4' placeholder='Enter or paste phone numbers here'></textarea>
+                          <textarea class='txt-textarea' rows='4' placeholder='Enter or paste phone numbers here'></textarea>
                         </div>
                         <span>Message</span>
                         <div>
-                          <textarea rows='4'> $content 
+                          <textarea class='txt-textarea' rows='4'> $content 
                           $single_page_link
                           </textarea>
                         </div>
-                        <button type='submit' href='/'>Submit</button>
+                        <button class='button-class' type='submit' href='/'>Submit</button>
                       </form>
                     
                   </div>
                 </div>
               </div>";
   }
+	
+}
+add_shortcode('campaigns_url','camp_link_URL');
+function camp_link_URL(){
+	
+	global $post;
+  	$user_id = get_current_user_id();
+    if($user_id){
+        $author_id = $post->post_author;
+        $single_page_link = get_permalink();
+        $html = "";
+        $cmp_ary = array (
+        'post_type' => 'campaign',
+        'posts_per_page' => -1,
+        'author' => $user_id,
+        'order'=> 'ASC');
+        $campaign_ary = get_posts($cmp_ary);
+        $count = count($campaign_ary);
+        extract( shortcode_atts( array(
+            
+            'text'   => '',
+            'color'  => '#000',
+            'bg_color' => 'blue',
+            'content' =>'Please support the campaign by following the link '
+        ), $atts ) );
+
+		$content_url = array();
+        foreach($campaign_ary as $result){
+            $page_link = get_permalink($result->ID);
+			$content_url[] = "<a href =$page_link>$page_link</a>";
+            
+        }
+		$ct = implode("<br/>", $content_url);
+		return $ct;
+		
+	}
 	
 }
