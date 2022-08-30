@@ -16,12 +16,12 @@ if ( ! defined( 'ABSPATH' ) ) {
  
 add_action('wp_enqueue_scripts', 'scripts_for_txt_msg_button');
 function scripts_for_txt_msg_button() {
-	wp_enqueue_script('wpcharitable-textmessagejs', TXT_MSG_URL.'assets/js/wpcharitable-textmessage6.js', array('jquery'), '1.1.0', true );
+	wp_enqueue_script('wpcharitable-textmessagejs', TXT_MSG_URL.'assets/js/wpcharitable-textmessage.js', array('jquery'), '1.1.0', true );
 }
 
 add_action('wp_enqueue_scripts', 'style_for_ticketing_txt_msg_button');
 function style_for_ticketing_txt_msg_button() { 
-	wp_enqueue_style('textmessage-wpcharitablecss', TXT_MSG_URL.'assets/css/textmessage-wpcharitable6.css');
+	wp_enqueue_style('textmessage-wpcharitablecss', TXT_MSG_URL.'assets/css/textmessage-wpcharitable.css');
 }
 
 // add_action('init', 'text_message_btn');

@@ -204,10 +204,8 @@ a.show-mobile-atag.txt-btn{
     padding: 10px;
     text-align: center;
   }
-  .show-mobile {
+  .show-mobile, .show-mobile-atag {
     display: none;
-    
   }
+	
 }
-
-

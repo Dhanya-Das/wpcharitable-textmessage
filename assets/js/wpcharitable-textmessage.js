@@ -26,6 +26,16 @@ modalBtns1.forEach(function (btn1) {
 	document.getElementById(modal1).style.display = "block";
   };
 });
+
+let modalBtns2 = [...document.querySelectorAll(".show-mobile-ios-atag")];
+modalBtns2.forEach(function (btn2) {
+  btn2.onclick = function () {
+	let modal2 = btn2.getAttribute("data-modal1");
+	document.getElementById(modal2).style.display = "block";
+  };
+});
+
+
 let closeBtns1 = [...document.querySelectorAll(".close-mobile")];
 closeBtns1.forEach(function (btn1) {
   btn1.onclick = function () {
@@ -46,6 +56,16 @@ window.onclick = function (event) {
     let checkedURL = jQuery('form input[type=radio]:checked').val();
     let newhref = jQuery("a.show-mobile-atag.btn").attr("href", _href + checkedURL);
     console.log(newhref);
+    // alert( checkedURL + _href );
+  });
+});
+
+jQuery('.show-mobile-ios').ready(function(){
+  jQuery('#mobile-submit-btn').on('click', function() {
+    let _href1 = jQuery("a.show-mobile-ios-atag.btn").attr("href");
+    let checkedURL1 = jQuery('form input[type=radio]:checked').val();
+    let newhref1 = jQuery("a.show-mobile-ios-atag.btn").attr("href", _href1 + checkedURL1);
+    console.log(newhref1);
     // alert( checkedURL + _href );
   });
 });
