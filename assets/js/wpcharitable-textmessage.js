@@ -69,3 +69,7 @@ jQuery('.show-mobile-ios').ready(function(){
     // alert( checkedURL + _href );
   });
 });
+jQuery(document).ready(function(){
+	jQuery('#charitable_field_user_pass_element').attr("placeholder", "0123456789").attr("oninput", "this.value = this.value.replace(/[^0-9]/g,'');").wrap("<span class='overlap'></span>");
+	jQuery('#charitable_field_user_login_element').attr("placeholder", "0123456789").attr("oninput", "this.value = this.value.replace(/[^0-9]/g,'');").wrap("<span class='overlap'></span>");
+});
