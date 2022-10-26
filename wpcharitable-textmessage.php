@@ -327,7 +327,7 @@ function twilo_api($url=NULL, $to){
 	$client = new Client($account_sid, $auth_token);
 	$client->messages->create(
 		// Where to send a text message (your cell phone?)
-		'+' . $to,
+		'+1' . $to,
 		array(
 			'from' => $twilio_number,
 			'body' => $sms_body
@@ -479,7 +479,9 @@ function save_campaign_cpt( $post_id, $post, $update ) {
 	$url =  get_the_permalink($post_id);
 	$title = get_the_title($post_id);
     if($phone){
-	    twilo_api($url, $phone);
+        if(is_numeric($phone)){
+	        twilo_api($url, $phone);
+        }
     }
 		
 	$subject = "Campaign Creation Successfull";
